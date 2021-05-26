@@ -27,13 +27,11 @@ feeds].
 
 Uses ed25519 for keys and SHA256 for hashing.
 
-FIXME: describe HMAC in relation to signatures
-
 A message in this format is encoded as an array of:
 
-- `author` a binary TFK encoded feed id
+- `author` a binary [TFK] encoded feed id
 - `sequence` an integer starting at 1
-- `previous` a binary TFK encoded message id of the previous message
+- `previous` a binary [TFK] encoded message id of the previous message
   on the feed
 - `time` an integer representing the UNIX epoch timestamp the message
   was created
@@ -43,6 +41,8 @@ A message in this format is encoded as an array of:
 - `signature` the bytes of all the fields above concatenated and
   signed using the private key of the meta feed
 
+For signatures we use the same [HMAC signing capability]
+(sodium.crypto_auth) as in the classic SSB format.
 
 [SSB]: https://github.com/ssbc/
 [gabby grove]: https://github.com/ssbc/ssb-spec-drafts/tree/master/drafts/draft-ssb-core-gabbygrove/00
@@ -50,3 +50,4 @@ A message in this format is encoded as an array of:
 [meta feeds]: https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec
 [bipf]: https://github.com/ssbc/bipf
 [TFK]: https://github.com/ssbc/envelope-spec/blob/master/encoding/tfk.md
+[HMAC signing capability]: https://github.com/ssb-js/ssb-keys#signobjkeys-hmac_key-obj
