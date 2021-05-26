@@ -36,6 +36,7 @@ A message in this format is encoded as an array of:
 - `time` an integer representing the UNIX epoch timestamp the message
   was created
 - `content` an object consisting of the data relevant to the message
+  or a binary [TFK] encoded box2 message.
 - `content signature` the bytes of `content` signed using the private
   key of the subfeed
 - `signature` the bytes of all the fields above concatenated and
@@ -43,6 +44,8 @@ A message in this format is encoded as an array of:
 
 For signatures we use the same [HMAC signing capability]
 (sodium.crypto_auth) as in the classic SSB format.
+
+The maximum size of a message in bytes must not exceed 8192 bytes.
 
 [SSB]: https://github.com/ssbc/
 [gabby grove]: https://github.com/ssbc/ssb-spec-drafts/tree/master/drafts/draft-ssb-core-gabbygrove/00
