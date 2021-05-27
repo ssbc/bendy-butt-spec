@@ -67,6 +67,8 @@ Message must conform to the following rules:
  - Must be in the format specified above
  - The previous field must be correct
  - The signature must be valid
+ - The TFK format for `author` and `previous` must stay the same,
+   there is no upgradeability in the middle of a feed
  - The maximum size of a message in bytes must not exceed 8192 bytes.
 
 Content must conform to the following rules:
@@ -75,6 +77,7 @@ Content must conform to the following rules:
  - a subfeed field with a [TFK] encoded feed id
  - a metafeed field with a [TFK] encoded feed id
  - a nonce field with a 32 bit random integer value
+ - the content signature must be correct
 
 [SSB]: https://github.com/ssbc/
 [gabby grove]: https://github.com/ssbc/ssb-spec-drafts/tree/master/drafts/draft-ssb-core-gabbygrove/00
