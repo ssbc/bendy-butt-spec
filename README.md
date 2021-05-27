@@ -25,8 +25,6 @@ A feed format based on [bipf] a very simple binary format (Javascript
 implementation is less than 500 lines of code) tailored for [meta
 feeds].
 
-Uses ed25519 for keys and SHA256 for hashing.
-
 A message in this format is encoded as an array of:
 
 - `author` a binary [TFK] encoded feed id
@@ -37,13 +35,22 @@ A message in this format is encoded as an array of:
   was created
 - `content` an object consisting of the data relevant to the message
   or a binary [TFK] encoded box2 message.
-- `content signature` the bytes of `content` signed using the private
-  key of the subfeed
+- `content signature` concatenation of the bytes of 'metafeeds' and
+  the bytes of the `content` field signed using the private key of the
+  subfeed
 - `signature` the bytes of all the fields above concatenated and
   signed using the private key of the meta feed
 
+Uses ed25519 for keys and SHA256 for hashing (FIXME: will be specified
+in TFK document).
+
+The input for content signature includes specific starting bytes in
+order to make sure that the signature can only be used for meta feed
+signatures and not for anything else.
+
 For signatures we use the same [HMAC signing capability]
-(sodium.crypto_auth) as in the classic SSB format.
+(sodium.crypto_auth) and sodium.crypto_sign_detached as in the classic
+SSB format.
 
 The maximum size of a message in bytes must not exceed 8192 bytes.
 
