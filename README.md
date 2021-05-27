@@ -7,7 +7,9 @@ What is bipfy badger?
 Why a new feed format, we already have [gabby grove] and [bamboo]?
 
 > Because we would like a simple feed format for [meta feeds] that is
-> easy to implement in any language
+> easy to implement in any language. Furthermore as meta feeds makes
+> it a easier to have multiple feed formats we wanted to show that
+> creating a new feed format does not have to be hard.
 
 Can't you just use the classic format?
 
