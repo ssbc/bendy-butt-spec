@@ -65,6 +65,7 @@ meta feed if content is not valid.
 
 Message must conform to the following rules:
  - Must be in the format specified above
+ - The previous field must be correct
  - The signature must be valid
  - The maximum size of a message in bytes must not exceed 8192 bytes.
 
