@@ -20,20 +20,21 @@ What is wrong with classic format?
 
 ## Details
 
-A message is encoded in [bencode] as an array of:
+A message is encoded in [bencode] and uses SSB binary field encodings
+([SSB-BFE]) as an array of:
 
-- `author` a binary [SSB binary field encodings] encoded feed id
+- `author` a binary [SSB-BFE] encoded feed id
 - `sequence` a 32 bit integer starting at 1
-- `previous` a binary [SSB binary field encodings] encoded message id of the previous message
+- `previous` a binary [SSB-BFE] encoded message id of the previous message
   on the feed. For the first message this must be zero bytes.
 - `time` an integer representing the UNIX epoch timestamp the message
   was created
 - `content` an encoded dictionary consisting of the data relevant to
-  the message or a binary [SSB binary field encodings] encoded box2 message.
+  the message or a binary [SSB-BFE] encoded box2 message.
 - `content signature` concatenation of the string 'metafeeds' encoded
   as bytes and the bytes of the `content` field signed using the
   private key of the sub feed, if content is encrypted this will also
-  be encrypted as a binary [SSB binary field encodings] encoded box2 message
+  be encrypted as a binary [SSB-BFE] encoded box2 message
 - `signature` the bytes of all the fields above concatenated and
   signed using the private key of the meta feed
 
@@ -45,7 +46,7 @@ For signatures we use the same [HMAC signing capability]
 (sodium.crypto_auth) and sodium.crypto_sign_detached as in the classic
 SSB format.
 
-Uses ed25519 for keys and SHA256 for hashing, see [SSB binary field encodings].
+Uses ed25519 for keys and SHA256 for hashing, see [SSB-BFE].
 
 ## Validation
 
@@ -60,15 +61,15 @@ Message must conform to the following rules:
  - Must be in the format specified above
  - The previous field must be correct
  - The signature field must be valid
- - The [SSB binary field encodings] format for `author` and `previous` must stay the same,
+ - The [SSB-BFE] format for `author` and `previous` must stay the same,
    there is no upgradeability in the middle of a feed
  - The maximum size of a message in bytes must not exceed 8192 bytes.
 
 Content must conform to the following rules:
  - a type field with a string value of only the following values
    possible: 'metafeed/add', 'metafeed/update, 'metafeed/tombstone'
- - a subfeed field with a [SSB binary field encodings] encoded feed id
- - a metafeed field with a [SSB binary field encodings] encoded feed id
+ - a subfeed field with a [SSB-BFE] encoded feed id
+ - a metafeed field with a [SSB-BFE] encoded feed id
  - a nonce field with a 32 bit random integer value
  - the content signature must be correct
 
@@ -76,6 +77,6 @@ Content must conform to the following rules:
 [gabby grove]: https://github.com/ssbc/ssb-spec-drafts/tree/master/drafts/draft-ssb-core-gabbygrove/00
 [bamboo]: https://github.com/AljoschaMeyer/bamboo
 [meta feeds]: https://github.com/ssb-ngi-pointer/ssb-meta-feed-spec
-[SSB binary field encodings]: https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings
+[SSB-BFE]: https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings
 [HMAC signing capability]: https://github.com/ssb-js/ssb-keys#signobjkeys-hmac_key-obj
 [bencode]: https://en.wikipedia.org/wiki/Bencode
