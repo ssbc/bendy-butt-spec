@@ -21,10 +21,9 @@ What is wrong with classic format?
 ## Details
 
 A message is encoded in [bencode] and uses SSB binary field encodings
-([SSB-BFE]) as an array of dictionary encoded message payload and
-signature:
+([SSB-BFE]) as an array of message payload and signature:
 
-Message payload:
+Message payload, an array in this specific order of:
 
 - `author` a binary [SSB-BFE] encoded feed id
 - `sequence` a 32 bit integer starting at 1
@@ -39,7 +38,7 @@ Message payload:
   encrypted this will also be encrypted as a binary [SSB-BFE] encoded
   box2 message
 
-Signature
+Signature:
 
 - the bytes of the message payload entry in the array signed using the
   private key of the meta feed
