@@ -49,9 +49,10 @@ only be used for meta feed signatures and not for anything else.
 
 For signatures we use the same [HMAC signing capability]
 (sodium.crypto_auth) and sodium.crypto_sign_detached as in the classic
-SSB format.
+SSB format (ed25519).
 
-Uses ed25519 for keys and SHA256 for hashing, see [SSB-BFE].
+The key or id of a message is the SHA256 hash of the array consisting
+of message payload and signature as bytes.
 
 ## Validation
 
