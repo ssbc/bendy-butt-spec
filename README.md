@@ -21,7 +21,10 @@ What is wrong with classic format?
 ## Details
 
 A message is encoded in [bencode] and uses SSB binary field encodings
-([SSB-BFE]) as an array of:
+([SSB-BFE]) as an array of dictionary encoded message payload and
+signature:
+
+Message payload:
 
 - `author` a binary [SSB-BFE] encoded feed id
 - `sequence` a 32 bit integer starting at 1
@@ -29,14 +32,17 @@ A message is encoded in [bencode] and uses SSB binary field encodings
   on the feed. For the first message this must be zero bytes.
 - `time` an integer representing the UNIX epoch timestamp the message
   was created
-- `content` an encoded dictionary consisting of the data relevant to
-  the message or a binary [SSB-BFE] encoded box2 message.
-- `content signature` concatenation of the string 'metafeeds' encoded
-  as bytes and the bytes of the `content` field signed using the
-  private key of the sub feed, if content is encrypted this will also
-  be encrypted as a binary [SSB-BFE] encoded box2 message
-- `signature` the bytes of all the fields above concatenated and
-  signed using the private key of the meta feed
+- `content` an array of a dictionary encoded the data relevant to the
+  meta feed and a signature. The signature is the concatenation of the
+  string 'metafeeds' encoded as bytes and the bytes of the content
+  payload, signed using the private key of the sub feed. If content is
+  encrypted this will also be encrypted as a binary [SSB-BFE] encoded
+  box2 message
+
+Signature
+
+- the bytes of the message payload entry in the array signed using the
+  private key of the meta feed
 
 The input for the content signature includes specific starting bytes
 for domain separation in order to make sure that the signature can
