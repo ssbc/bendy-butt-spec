@@ -43,6 +43,29 @@ Signature:
 - the bytes of the message payload entry in the array signed using the
   private key of the meta feed
 
+Example (FIXME: proper data):
+
+```
+[
+  [
+    <Buffer 00 02 e8 20 31 38 8d df f8 b5 0e 56 b6 c0 97 42 1e 9a a8 92 ec 04 e9 42 fa fd 31 dc 3d 2c 2e 3e 52 fd>, // author
+    1, // sequence
+    <Buffer 01 02>, // previous
+    1456154790701, // timestamp
+    [
+      { 
+        type: 'metafeed/add', 
+        feedformat: 'classic', 
+        feedpurpose: 'main', 
+        ...
+      }, // content
+      <Buffer 04 00 ff f7 3e 32 13 e9 45 4c 50 e8 eb 86 c3 c7 0d 1f 95 dd d2 29 95 41 c5 3b fa 50 8c 8b a3 f1 3a 6f ce 33 9d ba 61 70 12 b5 83 99 4f 75 8c 60 a3 fa ... 16 more bytes> // content signature
+    ]
+  ],
+  <Buffer 04 00 8d e9 bc f9 8f 93 7b 49 69 a3 b8 b0 42 b9 08 c8 bc 0c f3 2d 43 50 08 84 20 14 06 e7 06 bc 21 f0 ff 29 a1 fc f9 55 25 9f c1 ac e0 90 17 f1 33 6a ... 16 more bytes> // payload signature
+]
+```
+
 The input for the content signature includes specific starting bytes
 for domain separation in order to make sure that the signature can
 only be used for meta feed signatures and not for anything else.
