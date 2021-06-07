@@ -77,9 +77,10 @@ Example (FIXME: proper data):
 ]
 ```
 
-The content signature starts with two specific bytes (0x04, 0x00)
-for domain separation in order to make sure that the signature can
-only be used for meta feed signatures and not for anything else.
+To achive domain separation, the content bytes are prefixed with
+the string `metafeeds` when it is signed and verified.
+This assures that the signature can only be used for
+meta feed signatures and not for anything else.
 
 For signatures we use the same [HMAC signing capability]
 (sodium.crypto_auth) and sodium.crypto_sign_detached as in the classic
