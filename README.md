@@ -1,30 +1,37 @@
-# Meta feed message encoding
+# Bendy Butt
+
+What is bendy butt?
+
+> A new feed format for [meta feeds]
 
 Why a new feed format, we already have [gabby grove] and [bamboo]?
 
-> Because we would want to offer a feed format for [meta feeds] that is
-> simple and easy to implement in any programming language by reusing an
-> established format ([bencode]) with existing encoder libraries.
-> Furthermore, as meta feeds makes it easier to have multiple feed formats,
-> we wanted to show that creating a new feed format does not have to be hard.
+> Because we would want to offer a feed format that is simple and easy
+> to implement in any programming language by reusing an established
+> format ([bencode]) with existing encoder libraries.  Furthermore, as
+> meta feeds makes it easier to have multiple feed formats, we wanted
+> to show that creating a new feed format does not have to be hard.
 
 Can't you just use the classic format?
 
-> That would mean clients would have to support reading and writing the
-> classic format forever, even for applications that only use newer feed formats.
+> That would mean clients would have to support reading and writing
+> the classic format forever, even for applications that only use
+> newer feed formats.
 
 What is wrong with the classic format?
 
-> There are multiple problems, most of them come from the fact that
-> it is very tied to the internals of the v8 engine for Javascript.
-> JSON is good as an exchange format for values of data but not well
-> suited to cryptographically sign messages where a canonical representation
+> There are multiple problems, most of them come from the fact that it
+> is very tied to the internals of the v8 engine for Javascript. JSON
+> is good as an exchange format for values of data but not well suited
+> to cryptographically sign messages where a canonical representation
 > of each value is paramount.
 
 ## Details
 
-A message is encoded via [bencode] as an array of message payload and signature.
-SSB binary field encodings ([SSB-BFE]) is used to disambiguate binary data like `author` or `previous` from ordinary byte strings.
+A message is encoded via [bencode] as an array of message payload and
+signature.  SSB binary field encodings ([SSB-BFE]) is used to
+disambiguate binary data like `author` or `previous` from ordinary
+byte strings.
 
 Message payload; an array with 5 elements in this specific order:
 
@@ -43,8 +50,8 @@ Message payload; an array with 5 elements in this specific order:
 
 Signature:
 
-- the encoded bytes of the message payload entry in the array signed using the
-  private key of the meta feed
+- the encoded bytes of the message payload entry in the array signed
+  using the private key of the meta feed
 
 Example (FIXME: proper data):
 
@@ -77,10 +84,10 @@ Example (FIXME: proper data):
 ]
 ```
 
-To achieve domain separation, the content bytes are prefixed with
-the string `metafeeds` when it is signed and verified.
-This ensures that the signature can only be used for
-meta feed signatures and not for anything else.
+To achieve domain separation, the content bytes are prefixed with the
+string `metafeeds` when it is signed and verified.  This ensures that
+the signature can only be used for meta feed signatures and not for
+anything else.
 
 For signatures we use the same [HMAC signing capability]
 (sodium.crypto_auth) and sodium.crypto_sign_detached as in the classic
@@ -92,8 +99,8 @@ of message payload and signature as bytes.
 ## Validation
 
 For validation we differentiate between message validity and content
-validity. Since the content can be encrypted, there is potentially
-no way to validate that. This means a message should only be rejected
+validity. Since the content can be encrypted, there is potentially no
+way to validate that. This means a message should only be rejected
 before insertion into the local database if it fails the message
 validation rules. A message should not be included in the state of the
 meta feed if content is not valid.
