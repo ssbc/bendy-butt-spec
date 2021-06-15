@@ -121,7 +121,7 @@ Content must conform to the following rules:
    possible: `metafeed/add`, `metafeed/update` or `metafeed/tombstone`
  - a `subfeed` field with a [SSB-BFE] encoded feed id
  - a `metafeed` field with a [SSB-BFE] encoded feed id
- - a `nonce` field with a 32 bit random integer value
+ - a base64 encoded `nonce` field with a 32 bytes of random data
  - the content signature must be correct
 
 
