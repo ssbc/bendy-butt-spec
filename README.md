@@ -71,9 +71,9 @@ Example (FIXME: proper data):
       // content
       { 
         type: 'metafeed/add', 
-        feedformat: 'classic', 
-        feedpurpose: 'main', 
-        ...
+        subfeed: <Buffer ...>, 
+        metafeed: <Buffer ...>, 
+        nonce: <Buffer ...>
       },
       // content signature
       <Buffer 04 00 ff f7 3e 32 13 e9 45 4c 50 e8 eb 86 c3 c7 0d 1f 95 dd d2 29 95 41 c5 3b fa 50 8c 8b a3 f1 3a 6f ce 33 9d ba 61 70 12 b5 83 99 4f 75 8c 60 a3 fa ... 16 more bytes> 
