@@ -32,9 +32,22 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
 interpreted as described in RFC 2119.
 
-We shall use the notation `[a, b, c]` to denote a [bencode] *list*,
-`{a: 1, b: 2}` to denote a [bencode] *dictionary*, and the notation `a + b + c`
-to denote byte concatenation.
+**Notations for bencode and BFE**
+
+To avoid confusion with JSON, we shall use the notation `{ "a" => 1, "b" => 2 }`
+to denote a [bencode] *dictionary* with two entries: key "a" mapping to value
+`1` and key "b" mapping to value `2`.  We shall use the notation `[a, b, c]` to
+denote a [bencode] *list* of three values `a`, `b`, and `c`.
+
+For sequences of bytes, we use the notation `<03 02 01>` to represent the
+sequence of bytes `03` followed by `02` followed by `01`. We use the notation
+`a + b + c` to denote *byte concatenation* of the byte sequences `a` followed by
+`b` followed by `c`. In other words `<05 04> + <03 02 01>` equals
+`<05 04 03 02 01>`.
+
+For abstract substitutions, we use `(something)` to denote whatever `something`
+describes. In other words, anything wrapped in parentheses is just a placeholder
+for something else.
 
 ## Specification
 
@@ -78,26 +91,26 @@ for `[payload, signature]`, i.e. `key = SHA256([payload, signature])`.
 
 ## Example
 
-Following our `[a, b]` and `{a: 1, b: 2}` notation, which may look familiar in
-JavaScript, here is a Bendy Butt message with the `content` dictionary equal to
-`{type: 'greet', text: 'Good morning!'}`.
+Following our `[a, b]` and `{ "a" => 1, "b" => 2}` notation, which may look
+similar to JSON, here is a Bendy Butt message with the `content` dictionary
+equal to `{ "type" => 'greet', "text" => 'Good morning!' }`.
 
 ```
 [
   [
-    <Buffer 00 03 5c 27 ac 6e f0 cd fb d0 f8 9a 89 a1 b6 5a 36 04 77 a3 3e c7 9c b7 ab 14 cd 90 76 25 59 be e2 ff>,
+    <00 03 5c 27 ac 6e f0 cd fb d0 f8 9a 89 a1 b6 5a 36 04 77 a3 3e c7 9c b7 ab 14 cd 90 76 25 59 be e2 ff>,
     1,
-    <Buffer 06 02>,
+    <06 02>,
     12345,
     [
       {
-        type: <Buffer 06 00 67 72 65 65 74>,
-        text: <Buffer 06 00 47 6f 6f 64 20 6d 6f 72 6e 69 6e 67 21>
+        "type" => <06 00 67 72 65 65 74>,
+        "text" => <06 00 47 6f 6f 64 20 6d 6f 72 6e 69 6e 67 21>
       }
-      <Buffer 04 00 51 a6 7a 43 6a 66 f6 6d e0 3d 77 73 c0 b7 ba 98 84 61 32 46 c6 ee 6c 74 1b 1d 9e 59 18 24 b3 c7 1d a3 ec 35 bf e0 32 cf 86 55 7c f8 72 30 e9 56 ... 16 more bytes>
+      <04 00 51 a6 7a 43 6a 66 f6 6d e0 3d 77 73 c0 b7 ba 98 84 61 32 46 c6 ee 6c 74 1b 1d 9e 59 18 24 b3 c7 1d a3 ec 35 bf e0 32 cf 86 55 7c f8 72 30 e9 56 ... 16 more bytes>
     ]
   ],
-  <Buffer 04 00 6d 57 9f 55 14 d2 d8 69 09 ad 7b 31 f8 24 4f a7 fc 6a 0d c1 1e f4 1a 92 71 86 fb 8d 1b fc d5 17 b3 88 05 f0 a6 48 aa ba 24 f4 46 b0 9e 65 64 b6 ... 16 more bytes>
+  <04 00 6d 57 9f 55 14 d2 d8 69 09 ad 7b 31 f8 24 4f a7 fc 6a 0d c1 1e f4 1a 92 71 86 fb 8d 1b fc d5 17 b3 88 05 f0 a6 48 aa ba 24 f4 46 b0 9e 65 64 b6 ... 16 more bytes>
 ]
 ```
 
