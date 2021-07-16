@@ -48,32 +48,33 @@ such as strings.
 The message `payload` is a bencode list with 5 elements in this specific order,
 in other words, `[author, sequence, previous, timestamp, contentSection]`:
 
-1) `author`, a BFE-encoded feed ID
+1) `author`, a BFE-encoded "feed ID"
 2) `sequence`, a 32 bit integer greater than or equal to 1
-3) `previous`, a BFE-encoded message ID of the previous message
+3) `previous`, a BFE-encoded "message ID" of the previous message
   on the feed. For the first message this must be the BFE "nil" generic data
   type.
 4) `timestamp`, a 32 bit integer representing the UNIX epoch timestamp of message
   creation.
-5) `contentSection` is `[content, contentSignature]` such that:
-    1. `content`, any bencode dictionary representing the message contents, all
-    of which are internally encoded with BFE.
-    2. `contentSignature`, a BFE-encoded "signature". The signature is applied
-    on `prefix + content`, where prefix is the string "bendybutt" encoded as
-    UTF8 bytes (i.e. the `prefix`), using some cryptographic keypair (this
-    **MAY** be different from the `author` keypair). If `content` is encrypted,
-    this will also be encrypted as a BFE-encoded box2 message.
+5) `contentSection` can be one of two possible shapes:
+    1. `[content, contentSignature]` such that `content` is any bencode
+    dictionary representing the message contents, all of which are internally
+    encoded with BFE; and `contentSignature` is a BFE-encoded "signature". The
+    signature is applied on `prefix + content`, where `prefix` is the string
+    "bendybutt" encoded as UTF8 bytes. The signature uses some cryptographic
+    keypair which **MAY** be different from the `author` keypair (for example,
+    under the [meta feeds] spec, this will be the subfeed keypair).
+    2. BFE-encoded "encrypted data". Upon decryption, it takes the shape
+    `[content, contentSignature]` as described above.
 
-The message `signature` is applied on `prefix + payload`, where `prefix` is the
-string "bendybutt" encoded as UTF8 bytes, same prefix as used in
-`contentSignature`, signed with the `author`'s cryptographic keypair.
+The message `signature` is applied on `payload` using the `author`'s
+cryptographic keypair.
 
 Both the `signature` and the `contentSignature` use the same [HMAC signing capability]
 (`sodium.crypto_auth`) and `sodium.crypto_sign_detached` as in the classic
 SSB format (ed25519).
 
-The key or ID of a `[payload, signature]` message is the SHA256 hash of the
-bencoded bytes for `[payload, signature]`.
+The key or ID of a Bendy Butt message is the SHA256 hash of the bencoded bytes
+for `[payload, signature]`, i.e. `key = SHA256([payload, signature])`.
 
 ## Example
 
