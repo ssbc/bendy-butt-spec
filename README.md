@@ -2,7 +2,7 @@
 
 What is Bendy Butt?
 
-> A new feed format designed for (but not limited to) [meta feeds]
+> A new feed format designed for [meta feeds]
 
 Why a new feed format, when we already have [gabby grove] and [bamboo]?
 
@@ -25,6 +25,15 @@ What is wrong with the classic format?
 > is good as an exchange format for values of data but not well suited
 > to cryptographically sign messages where a canonical representation
 > of each value is paramount.
+
+Can I use Bendy Butt for purposes other than meta feeds?
+
+> Yes, but Bendy Butt was not designed as a general purpose feed 
+> format. We do not intend to extend Bendy Butt to cover any other
+> use cases besides meta feeds, but if the feed format constraints
+> are sufficient for your use cases, nothing stops you from using it.
+> To preserve the simplicity of this spec, we recommend not sending
+> patches to the spec to generalize it.
 
 ## Definitions
 
