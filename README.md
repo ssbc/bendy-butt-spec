@@ -173,7 +173,7 @@ should not be included in the bendy butt feed if its content is not valid.
 
 The message **MUST** conform to the following rules:
 
- - Has the shape of a bencode list `[payload, signature]
+ - Has the shape of a bencode list `[payload, signature]`
  - The payload has the shape of bencode list `[author, sequence, previous, timestamp, contentSection]`
  - The `previous` field matches the previous message's ID
  - The `signature` field must be correctly signing the `payload`
