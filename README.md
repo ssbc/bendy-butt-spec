@@ -77,11 +77,11 @@ The message `payload` is a bencode list with 5 elements in this specific order,
 in other words, `[author, sequence, previous, timestamp, contentSection]`:
 
 1) `author`, a BFE-encoded "feed ID"
-2) `sequence`, a 32 bit integer greater than or equal to 1
+2) `sequence`, a [bencode integer] greater than or equal to 1
 3) `previous`, a BFE-encoded "message ID" of the previous message
   on the feed. For the first message this must be the BFE "nil" generic data
   type.
-4) `timestamp`, a 32 bit integer representing the UNIX epoch timestamp of message
+4) `timestamp`, a [bencode integer] representing the UNIX epoch timestamp of message
   creation.
 5) `contentSection` can be one of two possible shapes:
     1. `[content, contentSignature]` such that `content` is any bencode
@@ -199,3 +199,4 @@ spec there are strict constraints applied to this bencode dictionary.
 [SSB-BFE]: https://github.com/ssb-ngi-pointer/ssb-binary-field-encodings
 [HMAC signing capability]: https://github.com/ssb-js/ssb-keys#signobjkeys-hmac_key-obj
 [bencode]: https://en.wikipedia.org/wiki/Bencode
+[bencode integer]: https://wiki.theory.org/index.php/BitTorrentSpecification#Integers
